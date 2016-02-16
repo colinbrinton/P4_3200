@@ -3,12 +3,14 @@
 
 #include "stdafx.h"
 #include "imageCollage.h"
+#include "cyclicCollage.h"
 
 #include <iostream>
 using namespace std;
 
 void displayCollage(int imgCol[], int size);
-void displayAll(imageCollage collageArray[], int size = 5);
+void displayAll(imageCollage* collageArray[], int size = 5);
+void repeatDisplay(imageCollage* item, int rep = 5);
 
 
 int main()
@@ -18,14 +20,17 @@ int main()
 
 	const int H_ARRAY_SIZE = 5;
 
-	imageCollage heteroCollageArray[H_ARRAY_SIZE];
+	imageCollage* heteroCollageArray[H_ARRAY_SIZE];
 	for (int index = 0; index < H_ARRAY_SIZE; index++)
 	{
-		imageCollage newCollage = imageCollage();
-		heteroCollageArray[index] = newCollage;
+		heteroCollageArray[index] = new cyclicCollage();
 	}
 
 	displayAll(heteroCollageArray);
+
+	cout << endl << endl;
+
+	repeatDisplay(heteroCollageArray[0]);
 
 	cin.get();
 
@@ -48,7 +53,7 @@ int main()
 		delete[] imgCol;
 	}
 
-	void displayAll(imageCollage collageArray[], int size)
+	void displayAll(imageCollage* collageArray[], int size)
 	{
 		for (int index = 0; index < size; index++)
 		{
@@ -57,8 +62,17 @@ int main()
 				cout << "Collage ";
 				cout << index + 1;
 				cout << ": ";
-				displayCollage(collageArray[index].getDisplay());
+				displayCollage(collageArray[index]->getDisplay());
 				cout << endl;
 			//}
+		}
+	}
+
+	void repeatDisplay(imageCollage* item, int rep)
+	{
+		for (int count = 0; count < rep; ++count)
+		{
+			displayCollage(item->getDisplay());
+			cout << endl;
 		}
 	}
