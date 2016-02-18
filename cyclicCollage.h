@@ -10,6 +10,6 @@ public:
 	~cyclicCollage();
 
 	bool replaceImage(int imgID) { return false; }
-	int* getDisplay();
+	//int* getDisplay();
 };
 

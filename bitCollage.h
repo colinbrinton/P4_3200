@@ -1,17 +1,15 @@
-/*#pragma once
+#pragma once
 #include "imageCollage.h"
-class bitCollage : imageCollage
+class bitCollage : public imageCollage
 {
-	const int MIN_OMIT = 1;
-	const int MAX_OMIT = 4;
+	const static int MIN_OMIT = 1;
+	const static int MAX_OMIT = 4;
 
 public:
-	bitCollage(int size = DEFAULT_SIZE);
+	bitCollage(int size = DEFAULT_SIZE) : imageCollage(size) {}
 	~bitCollage();
 
-	int* getDisplay();
+	vector<int> getDisplay();
 	bool replaceImage(int imgID);
 };
-
-*/
 

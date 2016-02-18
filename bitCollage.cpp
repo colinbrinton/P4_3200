@@ -1,12 +1,11 @@
 #include "stdafx.h"
-/*
 #include "bitCollage.h"
+#include <iostream>
 
 
-bitCollage::bitCollage(int size)
+/*bitCollage::bitCollage(int size)
 {
 	active = true;
-	collage = new List<int>();
 	for (int index = 0; index < size; index++)
 	{
 		int randomImg = rnd.Next(COL_MIN, COL_MAX);
@@ -15,46 +14,54 @@ bitCollage::bitCollage(int size)
 		collage.Add(randomImg);
 	}
 	displaySize = collage.Count;
-}
+}*/
 
 
 bitCollage::~bitCollage()
 {
 }
 
-int* bitCollage::getDisplay()
+vector<int> bitCollage::getDisplay()
 {
 	if (active)
 	{
 		++displayCount;
-		int omit = rnd.Next(MIN_OMIT, MAX_OMIT);
-		List<int> omitList = new List<int>();
-		int[] display = new int[collage.Count - omit];
+		int omit = rand() % (MAX_OMIT - MIN_OMIT) + MIN_OMIT;
+		//cout << endl << endl << "OMIT: "<< omit;
+		vector<int> *omitList = new vector<int>();
+		vector<int> *display = new vector<int>();
 		int randomIndex;
 		while (omit > 0)
 		{
-			randomIndex = rnd.Next(0, (collage.Count - 1));
-			while (omitList.Contains(randomIndex))
-				randomIndex = rnd.Next(0, (collage.Count - 1));
-			omitList.Add(randomIndex);
+			randomIndex = rand() % (collage.size());
+				while(find(omitList->begin(), omitList->end(), randomIndex) != omitList->end())
+					randomIndex = rand() % (collage.size());
+			omitList->push_back(randomIndex);
 			--omit;
 		}
 
-		int displayIndex = 0;
-		for (int index = 0; index < collage.Count; ++index)
+		//cout << endl << endl << "LIST: ";
+		//for (int i = 0; i < omitList->size(); i++)
+		//{
+		//	cout << omitList->at(i);
+		//	cout << " ";
+		//}
+
+		for (int index = 0; index < collage.size(); ++index)
 		{
-			if (!omitList.Contains(index))
+			if (!(find(omitList->begin(), omitList->end(), index) != omitList->end()))
 			{
-				display[displayIndex] = collage[index];
-				++displayIndex;
+				//cout << endl << "FOUND" << endl;
+				display->push_back(collage[index]);
 			}
 		}
-		return display;
+		delete omitList;
+		return *display;
 	}
 	else
 	{
-		int[] nullDisplay = new int[] { NULL };
-		return nullDisplay;
+		int* nullDisplay = new int[] { NULL };
+		//return nullDisplay;
 	}
 }
 
@@ -62,16 +69,19 @@ bool bitCollage::replaceImage(int imgID)
 {
 	if (active && ((imgID % 2) != 0))
 	{
-		if (collage.Contains(imgID))
+		if (find(collage.begin(), collage.end(), imgID) != collage.end())
 		{
-			int replacement = rnd.Next(COL_MIN, COL_MAX);
-			while (collage.Contains(replacement))
-				replacement = rnd.Next(COL_MIN, COL_MAX);
-			collage[collage.IndexOf(imgID)] = replacement;
-			++replaceCount;
-			return true;
+			int replacement = rand() % (COL_MAX - COL_MIN) + COL_MIN;
+			while (find(collage.begin(), collage.end(), replacement) != collage.end())
+				replacement = rand() % (COL_MAX - COL_MIN) + COL_MIN;
+			unsigned pos = find(collage.begin(), collage.end(), imgID) - collage.begin();
+			if (pos >= collage.size())
+			{
+				collage[pos] = replacement;
+				++replaceCount;
+				return true;
+			}
 		}
 	}
 	return false;
 }
-*/

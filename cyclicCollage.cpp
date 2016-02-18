@@ -13,7 +13,7 @@ cyclicCollage::~cyclicCollage()
 {
 }
 
-int* cyclicCollage::getDisplay()
+/*int* cyclicCollage::getDisplay()
 {
 	if (active)
 	{
@@ -31,4 +31,4 @@ int* cyclicCollage::getDisplay()
 		int* nullDisplay = new int[] { NULL };
 		return nullDisplay;
 	}
-}
+}*/

@@ -33,6 +33,6 @@ public:
 	void toggleActive();
 	bool imgQuery(int imgID);
 	virtual bool replaceImage(int imgID);
-	virtual int* getDisplay();
+	virtual vector<int> getDisplay();
 };
 

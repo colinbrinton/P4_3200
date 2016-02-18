@@ -74,21 +74,21 @@ bool imageCollage::replaceImage(int imgID)
 	return false;
 }
 
-int* imageCollage::getDisplay()
+vector<int> imageCollage::getDisplay()
 {
 	if (active)
 	{
 		++displayCount;
-		int* display = new int[collage.size()];
+		vector<int> display;
 		for (int index = 0; index < collage.size(); ++index)
 		{
-			display[index] = collage[index];
+			display.push_back(collage[index]);
 		}
 		return display;
 	}
 	else
 	{
 		int* nullDisplay = new int[] { NULL };
-		return nullDisplay;
+		//return nullDisplay;
 	}
 }

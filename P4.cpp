@@ -4,11 +4,12 @@
 #include "stdafx.h"
 #include "imageCollage.h"
 #include "cyclicCollage.h"
+#include "bitCollage.h"
 
 #include <iostream>
 using namespace std;
 
-void displayCollage(int imgCol[], int size);
+void displayCollage(vector<int> imgCol, int size);
 void displayAll(imageCollage* collageArray[], int size = 5);
 void repeatDisplay(imageCollage* item, int rep = 5);
 
@@ -23,7 +24,7 @@ int main()
 	imageCollage* heteroCollageArray[H_ARRAY_SIZE];
 	for (int index = 0; index < H_ARRAY_SIZE; index++)
 	{
-		heteroCollageArray[index] = new cyclicCollage();
+		heteroCollageArray[index] = new bitCollage();
 	}
 
 	displayAll(heteroCollageArray);
@@ -38,11 +39,11 @@ int main()
 	return 0;
 }
 
-	void displayCollage(int imgCol[], int size = 5)
+	void displayCollage(vector<int> imgCol, int size = 5)
 	{
 		int index = 0;
 		cout << imgCol[index];
-		for (int index = 0; index < size; index++)
+		for (int index = 0; index < imgCol.size(); index++)
 		{
 			if (index != 0)
 			{
@@ -50,7 +51,7 @@ int main()
 				cout << imgCol[index];
 			}
 		}
-		delete[] imgCol;
+		//delete imgCol;
 	}
 
 	void displayAll(imageCollage* collageArray[], int size)
