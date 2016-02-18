@@ -13,12 +13,12 @@ cyclicCollage::~cyclicCollage()
 {
 }
 
-/*int* cyclicCollage::getDisplay()
+vector<int> cyclicCollage::getDisplay()
 {
 	if (active)
 	{
 		++displayCount;
-		int* display = new int[collage.size()];
+		vector<int> display(collage.size());
 		for (int index = 0; index < collage.size(); ++index)
 		{
 			int shiftIndex = (index + (shift * displayCount)) % displaySize;
@@ -28,7 +28,7 @@ cyclicCollage::~cyclicCollage()
 	}
 	else
 	{
-		int* nullDisplay = new int[] { NULL };
+		vector<int> nullDisplay;
 		return nullDisplay;
 	}
-}*/
+}

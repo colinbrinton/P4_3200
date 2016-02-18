@@ -88,7 +88,7 @@ vector<int> imageCollage::getDisplay()
 	}
 	else
 	{
-		int* nullDisplay = new int[] { NULL };
-		//return nullDisplay;
+		vector<int> nullDisplay;
+		return nullDisplay;
 	}
 }
