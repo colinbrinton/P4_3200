@@ -9,6 +9,6 @@ public:
 		unsigned scr = DFLT_SCORE, unsigned rnk = DFLT_RANK, bool fr = DFLT_FREE, int dt = DFLT_DATE);
 	~bitCollageReview();
 
-	vector<int> getReviewDisplay() { return this->getDisplay(); }
+	vector<int> getDisplay() { return this->bitCollage::getDisplay(); }
 };
 

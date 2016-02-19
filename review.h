@@ -26,7 +26,7 @@ public:
 	review(unsigned scr = DFLT_SCORE, unsigned rnk = DFLT_RANK, bool fr = DFLT_FREE, int dt = DFLT_DATE);
 	~review();
 
-	virtual vector<int> getReviewDisplay();
+	virtual vector<int> getDisplay();
 	unsigned getRawScore();
 	unsigned getWeightedScore();
 };

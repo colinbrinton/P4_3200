@@ -29,7 +29,7 @@ unsigned review::getWeightedScore()
 	return round(weighted);
 }
 
-vector<int> review::getReviewDisplay()
+vector<int> review::getDisplay()
 {
 	vector<int> null;
 	return null;

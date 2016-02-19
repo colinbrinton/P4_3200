@@ -53,6 +53,11 @@ int main()
 
 	displayAllReview(reviewHeteroArray);
 
+	cout << "HERE: ";
+	review* testR = new collageReview(22);
+	displayCollage(testR->getDisplay());
+	delete testR;
+
 	/*review testReview(5, 50, false);
 
 	cout << "Score: " << testReview.getRawScore() << endl;
@@ -153,7 +158,7 @@ int main()
 				cout << "Collage ";
 				cout << index + 1;
 				cout << ": ";
-				displayCollage(collageArray[index]->getReviewDisplay());
+				displayCollage(collageArray[index]->getDisplay());
 				cout << endl;
 			}
 		}
@@ -172,7 +177,7 @@ int main()
 	{
 		for (int count = 0; count < rep; ++count)
 		{
-			displayCollage(item->getReviewDisplay());
+			displayCollage(item->getDisplay());
 			cout << endl;
 		}
 	}
