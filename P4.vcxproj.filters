@@ -33,10 +33,16 @@
     <ClInclude Include="review.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="reviewCollage.h">
+    <ClInclude Include="bitCollage.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="bitCollage.h">
+    <ClInclude Include="collageReview.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="cyclicCollageReview.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="bitCollageReview.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -59,7 +65,13 @@
     <ClCompile Include="review.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="reviewCollage.cpp">
+    <ClCompile Include="collageReview.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="cyclicCollageReview.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="bitCollageReview.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

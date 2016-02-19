@@ -5,6 +5,10 @@
 #include "imageCollage.h"
 #include "cyclicCollage.h"
 #include "bitCollage.h"
+#include "review.h"
+#include "collageReview.h"
+#include "cyclicCollageReview.h"
+#include "bitCollageReview.h"
 
 #include <iostream>
 using namespace std;
@@ -27,9 +31,16 @@ const int IMAGE_INDEX = H_ARRAY_SIZE - 1;       //               v
 
 void displayCollage(vector<int> imgCol);
 void displayAll(imageCollage* collageArray[], int size = H_ARRAY_SIZE);
+void displayAllReview(review* collageArray[], int size = H_ARRAY_SIZE);
 void repeatDisplay(imageCollage* item, int rep = 5);
+void repeatReviewDisplay(review* item, int rep = 5);
+void repeatCyclicDisplay(cyclicCollage* item, int rep = 5);
+void repeatBitDisplay(bitCollage* item, int rep = 5);
 void allocateCollageArray(imageCollage* (&colArray)[H_ARRAY_SIZE]);
+void allocateReviewArray(review* (&colArray)[H_ARRAY_SIZE]);
 void imageCollageTestSuite(imageCollage* imageCollage);
+void cyclicCollageTestSuite(imageCollage* cyclicCollage);
+void bitCollageTestSuite(imageCollage* bitCollage);
 
 
 int main()
@@ -37,9 +48,29 @@ int main()
 	unsigned seed = time(NULL);
 	srand(seed);
 
+	review* reviewHeteroArray[H_ARRAY_SIZE];
+	allocateReviewArray(reviewHeteroArray);
+
+	displayAllReview(reviewHeteroArray);
+
+	/*review testReview(5, 50, false);
+
+	cout << "Score: " << testReview.getRawScore() << endl;
+	cout << "Weighted: " << testReview.getWeightedScore() << endl;
+
+	collageReview testCR(8);
+	bitCollageReview* testCCR = new bitCollageReview(8);
+
+	repeatReviewDisplay(testCCR);
+
+	delete testCCR;
+
+
+	//displayCollage(testCR.getDisplay());
+
 	//const int H_ARRAY_SIZE = 5;
 
-	imageCollage* heteroCollageArray[H_ARRAY_SIZE];
+	/*imageCollage* heteroCollageArray[H_ARRAY_SIZE];
 	allocateCollageArray(heteroCollageArray);
 
 	displayAll(heteroCollageArray);
@@ -48,6 +79,14 @@ int main()
 
 	//repeatDisplay(heteroCollageArray[0]);
 	imageCollageTestSuite(heteroCollageArray[IMAGE_INDEX]);
+
+	cout << endl << endl;
+
+	cyclicCollageTestSuite(heteroCollageArray[CYCLIC_INDEX]);
+
+	cout << endl << endl;
+
+	bitCollageTestSuite(heteroCollageArray[BIT_INDEX]);
 
 	/*repeatDisplay(heteroCollageArray[12]);
 	cout << endl << endl;
@@ -77,7 +116,7 @@ int main()
 		{
 			int index = 0;
 			cout << imgCol[index];
-			for (int index = 0; index < imgCol.size(); index++)
+			for (unsigned index = 0; index < imgCol.size(); index++)
 			{
 				if (index != 0)
 				{
@@ -88,6 +127,7 @@ int main()
 		}
 		//delete imgCol;
 	}
+
 
 	void displayAll(imageCollage* collageArray[], int size)
 	{
@@ -104,7 +144,40 @@ int main()
 		}
 	}
 
+	void displayAllReview(review* collageArray[], int size)
+	{
+		for (int index = 0; index < H_ARRAY_SIZE; index++)
+		{
+			if (index < RANDOM_SIZE)
+			{
+				cout << "Collage ";
+				cout << index + 1;
+				cout << ": ";
+				displayCollage(collageArray[index]->getReviewDisplay());
+				cout << endl;
+			}
+		}
+	}
+
 	void repeatDisplay(imageCollage* item, int rep)
+	{
+		for (int count = 0; count < rep; ++count)
+		{
+			displayCollage(item->getDisplay());
+			cout << endl;
+		}
+	}
+
+	void repeatReviewDisplay(review* item, int rep)
+	{
+		for (int count = 0; count < rep; ++count)
+		{
+			displayCollage(item->getReviewDisplay());
+			cout << endl;
+		}
+	}
+
+	void repeatBitDisplay(bitCollage* item, int rep)
 	{
 		for (int count = 0; count < rep; ++count)
 		{
@@ -138,6 +211,35 @@ int main()
 				colArray[index] = new cyclicCollage(TEST_SIZE);
 				++index;
 				colArray[index] = new imageCollage(TEST_SIZE);
+			}
+		}
+	}
+
+	void allocateReviewArray(review* (&colArray)[H_ARRAY_SIZE])
+	{
+		int collageSelector;
+		int collageSize;
+
+		for (int index = 0; index < H_ARRAY_SIZE; index++)
+		{
+			collageSelector = rand() % NUM_COL;
+			collageSize = rand() % (MAX_IMG - MIN_IMG) + MIN_IMG;
+			if (index < RANDOM_SIZE) //Random portion of array
+			{
+				if (collageSelector == IMAGE)
+					colArray[index] = new collageReview(collageSize);
+				if (collageSelector == CYCLIC)
+					colArray[index] = new cyclicCollageReview(collageSize);
+				if (collageSelector == BIT)
+					colArray[index] = new bitCollageReview(collageSize);
+			}
+			if (index >= RANDOM_SIZE) // Constant portion of array used in test suites
+			{
+				colArray[index] = new bitCollageReview(TEST_SIZE);
+				++index;
+				colArray[index] = new cyclicCollageReview(TEST_SIZE);
+				++index;
+				colArray[index] = new collageReview(TEST_SIZE);
 			}
 		}
 	}
@@ -245,4 +347,100 @@ int main()
 		cout << endl;
 
 
+	}
+
+	// Description - Tests the functionality of cyclicCollage. Calls every
+	//               overridden method except for replaceImage(). 
+	//               replaceImage() is not intended to be used with
+	//               cyclicCollage and will always return false when called.
+	void cyclicCollageTestSuite(imageCollage* cyclicCollage)
+	{
+		cout << "Calling getDisplay() on cyclicCollage object 5 times: ";
+		cout << endl;
+		repeatDisplay(cyclicCollage);
+		cout << endl;
+
+		cout << "getDisplay() has been called ";
+		cout << cyclicCollage->getDisplayCount();
+		cout << " times.";
+		cout << endl;
+
+		cout << endl;
+		cout << "Calling toggleActive()...";
+		cyclicCollage->toggleActive();
+		cout << "Done.";
+		cout << endl;
+		cout << "Attempting to display collage: ";
+		displayCollage(cyclicCollage->getDisplay());
+		cout << endl;
+
+		cout << "Calling toggleActive()...";
+		cyclicCollage->toggleActive();
+		cout << "Done.";
+		cout << endl;
+		cout << "Attempting to display collage: ";
+		cout << endl;
+		displayCollage(cyclicCollage->getDisplay());
+		cout << endl;
+	}
+
+	// Description - Tests the functionality of bitCollage. Calls every
+	//                overridden method.
+	void bitCollageTestSuite(imageCollage* bitCollage)
+	{
+		cout << "Calling getDisplay() on bitCollage object 5 times: ";
+		cout << endl;
+		repeatDisplay(bitCollage);
+		cout << endl;
+
+		cout << "Testing replaceImage() bitCollage method: ";
+		cout << endl;
+		cout << "Calling getDisplay() to fill an array of images to replace...";
+		vector<int> replace = bitCollage->getDisplay();
+		cout << "Done.";
+		cout << endl;
+		for (unsigned index = 0; index < replace.size(); index++)
+		{
+			cout << "Attempting to replace ";
+			cout << replace[index];
+			cout << "...";
+			if (bitCollage->replaceImage(replace[index]))
+				cout << "Success!";
+			else
+				cout << "Failed!";
+			cout << endl;
+		}
+
+		cout << endl;
+		cout << "Calling getDisplay() on bitCollage object 5 more times: ";
+		cout << endl;
+		repeatDisplay(bitCollage);
+
+		cout << endl;
+		cout << "getDisplay() has been called ";
+		cout << bitCollage->getDisplayCount();
+		cout << " times.";
+		cout << endl;
+
+		cout << bitCollage->getReplaceCount();
+		cout << " images have been replaced.";
+		cout << endl;
+
+		cout << endl;
+		cout << "Calling toggleActive()...";
+		bitCollage->toggleActive();
+		cout << "Done.";
+		cout << endl;
+		cout << "Attempting to display collage: ";
+		displayCollage(bitCollage->getDisplay());
+		cout << endl;
+
+		cout << "Calling toggleActive()...";
+		bitCollage->toggleActive();
+		cout << "Done.";
+		cout << endl;
+		cout << "Attempting to display collage: ";
+		cout << endl;
+		displayCollage(bitCollage->getDisplay());
+		cout << endl;
 	}

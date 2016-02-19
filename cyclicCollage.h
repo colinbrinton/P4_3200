@@ -2,6 +2,8 @@
 #include "imageCollage.h"
 class cyclicCollage : public imageCollage
 {
+protected:
+
 	const static int DEFAUL_SHIFT = 2;
 	int shift;
 
