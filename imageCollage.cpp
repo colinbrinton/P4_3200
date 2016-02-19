@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "imageCollage.h"
+#include <iostream>
 
 
 imageCollage::imageCollage(int size)
@@ -57,18 +58,15 @@ bool imageCollage::replaceImage(int imgID)
 {
 	if (active)
 	{
-		if (find(collage.begin(), collage.end(), imgID) != collage.end())
+		if (find(collage.begin(), collage.end(), imgID) != collage.end());
 		{
 			int replacement = rand() % (COL_MAX - COL_MIN) + COL_MIN;
 			while (find(collage.begin(), collage.end(), replacement) != collage.end())
 				replacement = rand() % (COL_MAX - COL_MIN) + COL_MIN;
-			unsigned pos = find(collage.begin(), collage.end(), imgID) - collage.begin();
-			if (pos >= collage.size()) 
-			{
-				collage[pos] = replacement;
-				++replaceCount;
-				return true;
-			}
+			int pos = find(collage.begin(), collage.end(), imgID) - collage.begin();
+			collage[pos] = replacement;
+			++replaceCount;
+			return true;
 		}
 	}
 	return false;

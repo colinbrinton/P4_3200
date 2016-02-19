@@ -47,7 +47,18 @@ int main()
 	cout << endl << endl;
 
 	//repeatDisplay(heteroCollageArray[0]);
-	//imageCollageTestSuite(heteroCollageArray[IMAGE_INDEX]);
+	imageCollageTestSuite(heteroCollageArray[IMAGE_INDEX]);
+
+	/*repeatDisplay(heteroCollageArray[12]);
+	cout << endl << endl;
+
+	vector<int> replaceImg = heteroCollageArray[12]->getDisplay();
+	cout << replaceImg[1];
+	heteroCollageArray[12]->replaceImage(replaceImg[1]);
+
+	cout << endl << endl;
+
+	repeatDisplay(heteroCollageArray[12]);*/
 
 	cin.get();
 
@@ -57,14 +68,22 @@ int main()
 
 	void displayCollage(vector<int> imgCol)
 	{
-		int index = 0;
-		cout << imgCol[index];
-		for (int index = 0; index < imgCol.size(); index++)
+		if (imgCol.size() == 0)
 		{
-			if (index != 0)
+			cout << "Nothing to display.";
+		}
+		
+		else
+		{
+			int index = 0;
+			cout << imgCol[index];
+			for (int index = 0; index < imgCol.size(); index++)
 			{
-				cout << ", ";
-				cout << imgCol[index];
+				if (index != 0)
+				{
+					cout << ", ";
+					cout << imgCol[index];
+				}
 			}
 		}
 		//delete imgCol;
