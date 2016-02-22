@@ -13,6 +13,7 @@ protected:
 	static const unsigned DFLT_RANK = 50;
 	static const bool DFLT_FREE = true;
 	static const int DFLT_DATE = 20161902;
+	static const int SCORE_MIN = 1;
 	
 	static const int RANK_OUTOF = 100;
 
@@ -29,4 +30,6 @@ public:
 	//virtual vector<int> getDisplay();
 	unsigned getRawScore();
 	unsigned getWeightedScore();
+	bool wasFree();
+	unsigned getDate();
 };

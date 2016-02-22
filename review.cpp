@@ -26,7 +26,19 @@ unsigned review::getWeightedScore()
 	double rankPercent = (rank / fullPoints);
 	double weighted = (score * rankPercent);
 
+	if (weighted < SCORE_MIN)
+		weighted = SCORE_MIN;
 	return round(weighted);
+}
+
+bool review::wasFree()
+{
+	return free;
+}
+
+unsigned review::getDate()
+{
+	return date;
 }
 
 /*vector<int> review::getDisplay()
