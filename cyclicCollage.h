@@ -8,7 +8,7 @@ protected:
 	int shift;
 
 public:
-	cyclicCollage(int size = DEFAULT_SIZE, int shft = DEFAUL_SHIFT) : imageCollage(size), shift(shft) {}
+	cyclicCollage(vector<int> col = NULL_COL, int shft = DEFAUL_SHIFT) : imageCollage(col), shift(shft) {}
 	~cyclicCollage();
 
 	bool replaceImage(int imgID) { return false; }

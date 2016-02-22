@@ -6,7 +6,7 @@ class bitCollage : public imageCollage
 	const static int MAX_OMIT = 4;
 
 public:
-	bitCollage(int size = DEFAULT_SIZE) : imageCollage(size) {}
+	bitCollage(vector<int> col = NULL_COL) : imageCollage(col) {}
 	~bitCollage();
 
 	vector<int> getDisplay();

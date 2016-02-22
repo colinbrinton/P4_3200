@@ -4,7 +4,7 @@
 #include <vector>
 #include <cstdlib>
 #include <ctime>
-#include "imageCollage.h"
+//#include "imageCollage.h"
 
 class review
 {
@@ -26,7 +26,7 @@ public:
 	review(unsigned scr = DFLT_SCORE, unsigned rnk = DFLT_RANK, bool fr = DFLT_FREE, int dt = DFLT_DATE);
 	~review();
 
-	virtual vector<int> getDisplay();
+	//virtual vector<int> getDisplay();
 	unsigned getRawScore();
 	unsigned getWeightedScore();
 };

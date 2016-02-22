@@ -29,15 +29,16 @@ const int BIT_INDEX = H_ARRAY_SIZE - 3;         // H_ARRAY_SIZE to change withou
 const int CYCLIC_INDEX = H_ARRAY_SIZE - 2;      //   the driver. |
 const int IMAGE_INDEX = H_ARRAY_SIZE - 1;       //               v
 
+vector<int> generateCollage(int size);
 void displayCollage(vector<int> imgCol);
 void displayAll(imageCollage* collageArray[], int size = H_ARRAY_SIZE);
-void displayAllReview(review* collageArray[], int size = H_ARRAY_SIZE);
+void displayAllCR(imageCollage* collageArray[], review* reviewArray[], int size = H_ARRAY_SIZE);
 void repeatDisplay(imageCollage* item, int rep = 5);
 void repeatReviewDisplay(review* item, int rep = 5);
 void repeatCyclicDisplay(cyclicCollage* item, int rep = 5);
 void repeatBitDisplay(bitCollage* item, int rep = 5);
 void allocateCollageArray(imageCollage* (&colArray)[H_ARRAY_SIZE]);
-void allocateReviewArray(review* (&colArray)[H_ARRAY_SIZE]);
+void allocateCRArray(imageCollage* (&colArray)[H_ARRAY_SIZE], review* (&revArray)[H_ARRAY_SIZE]);
 void imageCollageTestSuite(imageCollage* imageCollage);
 void cyclicCollageTestSuite(imageCollage* cyclicCollage);
 void bitCollageTestSuite(imageCollage* bitCollage);
@@ -48,15 +49,33 @@ int main()
 	unsigned seed = time(NULL);
 	srand(seed);
 
+
+
+
+	imageCollage* collageHeteroArray[H_ARRAY_SIZE];
+
+	allocateCollageArray(collageHeteroArray);
+
+	displayAll(collageHeteroArray);
+
+	cout << endl << endl;
+
 	review* reviewHeteroArray[H_ARRAY_SIZE];
-	allocateReviewArray(reviewHeteroArray);
 
-	displayAllReview(reviewHeteroArray);
+	allocateCRArray(collageHeteroArray, reviewHeteroArray);
 
-	cout << "HERE: ";
-	review* testR = new collageReview(22);
-	displayCollage(testR->getDisplay());
-	delete testR;
+	displayAllCR(collageHeteroArray, reviewHeteroArray);
+
+	cout << endl << reviewHeteroArray[0]->getRawScore();
+
+	//cout << "HERE: ";
+	//review* testR = new collageReview(22);
+	//displayCollage(testR->getDisplay());
+	//delete testR;
+
+	//imageCollage* testing = new bitCollageReview();
+
+	//testing->getDisplay();
 
 	/*review testReview(5, 50, false);
 
@@ -110,6 +129,23 @@ int main()
 	return 0;
 }
 
+vector<int> generateCollage(int size)
+{
+	const int COL_MIN = 10000; //May be changed to accommodate an image database with a different 
+	const int COL_MAX = 100000;//  amount of images.
+
+	vector<int> collage;
+	for (int index = 0; index < size; index++)
+	{
+		int randomImg = rand() % (COL_MAX - COL_MIN) + COL_MIN;
+		while (find(collage.begin(), collage.end(), randomImg) != collage.end())
+			randomImg = rand() % (COL_MAX - COL_MIN) + COL_MIN;
+		collage.push_back(randomImg);
+	}
+
+	return collage;
+}
+
 	void displayCollage(vector<int> imgCol)
 	{
 		if (imgCol.size() == 0)
@@ -149,7 +185,7 @@ int main()
 		}
 	}
 
-	void displayAllReview(review* collageArray[], int size)
+	void displayAllCR(imageCollage* collageArray[], review* reviewArray[], int size)
 	{
 		for (int index = 0; index < H_ARRAY_SIZE; index++)
 		{
@@ -160,6 +196,10 @@ int main()
 				cout << ": ";
 				displayCollage(collageArray[index]->getDisplay());
 				cout << endl;
+				cout << "Raw review score: ";
+				cout << reviewArray[index]->getRawScore() << endl;
+				cout << "Weighted review score: ";
+				cout << reviewArray[index]->getWeightedScore() << endl << endl;
 			}
 		}
 	}
@@ -177,7 +217,7 @@ int main()
 	{
 		for (int count = 0; count < rep; ++count)
 		{
-			displayCollage(item->getDisplay());
+			//displayCollage(item->getDisplay());
 			cout << endl;
 		}
 	}
@@ -200,27 +240,28 @@ int main()
 		{
 			collageSelector = rand() % NUM_COL;
 			collageSize = rand() % (MAX_IMG - MIN_IMG) + MIN_IMG;
+			vector<int> collage = generateCollage(collageSize);
 			if (index < RANDOM_SIZE) //Random portion of array
 			{
 				if (collageSelector == IMAGE)
-					colArray[index] = new imageCollage(collageSize);
+					colArray[index] = new imageCollage(collage);
 				if (collageSelector == CYCLIC)
-					colArray[index] = new cyclicCollage(collageSize);
+					colArray[index] = new cyclicCollage(collage);
 				if (collageSelector == BIT)
-					colArray[index] = new bitCollage(collageSize);
+					colArray[index] = new bitCollage(collage);
 			}
 			if (index >= RANDOM_SIZE) // Constant portion of array used in test suites
 			{
-				colArray[index] = new bitCollage(TEST_SIZE);
+				colArray[index] = new bitCollage(generateCollage(TEST_SIZE));
 				++index;
-				colArray[index] = new cyclicCollage(TEST_SIZE);
+				colArray[index] = new cyclicCollage(generateCollage(TEST_SIZE));
 				++index;
-				colArray[index] = new imageCollage(TEST_SIZE);
+				colArray[index] = new imageCollage(generateCollage(TEST_SIZE));
 			}
 		}
 	}
 
-	void allocateReviewArray(review* (&colArray)[H_ARRAY_SIZE])
+	void allocateCRArray(imageCollage* (&colArray)[H_ARRAY_SIZE], review* (&revArray)[H_ARRAY_SIZE])
 	{
 		int collageSelector;
 		int collageSize;
@@ -231,20 +272,39 @@ int main()
 			collageSize = rand() % (MAX_IMG - MIN_IMG) + MIN_IMG;
 			if (index < RANDOM_SIZE) //Random portion of array
 			{
+				vector<int> collage = generateCollage(collageSize);
 				if (collageSelector == IMAGE)
-					colArray[index] = new collageReview(collageSize);
+				{
+					collageReview *cR = new collageReview(collage);
+					colArray[index] = cR;
+					revArray[index] = cR;
+				}
 				if (collageSelector == CYCLIC)
-					colArray[index] = new cyclicCollageReview(collageSize);
+				{
+					cyclicCollageReview *cCR = new cyclicCollageReview(collage);
+					colArray[index] = cCR;
+					revArray[index] = cCR;
+				}
 				if (collageSelector == BIT)
-					colArray[index] = new bitCollageReview(collageSize);
+				{
+					bitCollageReview *bCR = new bitCollageReview(collage);
+					colArray[index] = bCR;
+					revArray[index] = bCR;
+				}
 			}
 			if (index >= RANDOM_SIZE) // Constant portion of array used in test suites
 			{
-				colArray[index] = new bitCollageReview(TEST_SIZE);
+				bitCollageReview *bCR = new bitCollageReview(generateCollage(TEST_SIZE));
+				colArray[index] = bCR;
+				revArray[index] = bCR;
 				++index;
-				colArray[index] = new cyclicCollageReview(TEST_SIZE);
+				cyclicCollageReview *cCR = new cyclicCollageReview(generateCollage(TEST_SIZE));
+				colArray[index] = cCR;
+				revArray[index] = cCR;
 				++index;
-				colArray[index] = new collageReview(TEST_SIZE);
+				collageReview *cR = new collageReview(generateCollage(TEST_SIZE));
+				colArray[index] = cR;
+				revArray[index] = cR;
 			}
 		}
 	}

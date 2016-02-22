@@ -3,16 +3,14 @@
 #include <iostream>
 
 
-imageCollage::imageCollage(int size)
+imageCollage::imageCollage(vector<int> col)
 {
 	//srand(seed);
-	active = true;
-	for (int index = 0; index < size; index++)
+	if (col.size() > 0)
+		active = true;
+	for (int index = 0; index < col.size(); index++)
 	{
-		int randomImg = rand() % (COL_MAX - COL_MIN) + COL_MIN;
-		while (find(collage.begin(), collage.end(), randomImg) != collage.end())
-			randomImg = rand() % (COL_MAX - COL_MIN) + COL_MIN;
-		collage.push_back(randomImg);
+		collage.push_back(col[index]);
 	}
 	displaySize = collage.size();
 }
@@ -89,4 +87,9 @@ vector<int> imageCollage::getDisplay()
 		vector<int> nullDisplay;
 		return nullDisplay;
 	}
+}
+
+bool imageCollage::isActive()
+{
+	return active;
 }

@@ -29,8 +29,8 @@ unsigned review::getWeightedScore()
 	return round(weighted);
 }
 
-vector<int> review::getDisplay()
+/*vector<int> review::getDisplay()
 {
 	vector<int> null;
 	return null;
-}
+}*/

@@ -5,10 +5,10 @@ class bitCollageReview :
 	public review, public bitCollage
 {
 public:
-	bitCollageReview(int sz = DEFAULT_SIZE,
+	bitCollageReview(vector<int> col = NULL_COL,
 		unsigned scr = DFLT_SCORE, unsigned rnk = DFLT_RANK, bool fr = DFLT_FREE, int dt = DFLT_DATE);
 	~bitCollageReview();
 
-	vector<int> getDisplay() { return this->bitCollage::getDisplay(); }
+	//vector<int> getDisplay() { return this->bitCollage::getDisplay(); }
 };
 

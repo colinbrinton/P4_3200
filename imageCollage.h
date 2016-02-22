@@ -18,6 +18,7 @@ protected:
 	const static int DEFAULT_SIZE = 5;
 	static const int COL_MIN = 10000; //May be changed to accommodate an image database with a different 
 	static const int COL_MAX = 100000;//  amount of images.
+	static const vector<int> NULL_COL;
 	vector<int> collage;
 	bool active;
 	int displaySize;
@@ -25,7 +26,7 @@ protected:
 	int replaceCount = 0;
 
 public:
-	imageCollage(int size = DEFAULT_SIZE);
+	imageCollage(vector<int> col = NULL_COL);
 	~imageCollage();
 
 	int getDisplayCount();
@@ -34,5 +35,6 @@ public:
 	bool imgQuery(int imgID);
 	virtual bool replaceImage(int imgID);
 	virtual vector<int> getDisplay();
+	bool isActive();
 };
 
