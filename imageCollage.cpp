@@ -29,7 +29,6 @@
 * consecutively 10000-99999. It is assumed that all images in the database are of
 * equal desire and therefore the images are selected randomly.
 */
-#include "stdafx.h"
 #include "imageCollage.h"
 #include <iostream>
 

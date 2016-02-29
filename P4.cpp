@@ -38,7 +38,6 @@
 * array used for testing. The Console is used to display output and accept
 * key presses.
 */
-#include "stdafx.h"
 #include "imageCollage.h"
 #include "cyclicCollage.h"
 #include "bitCollage.h"
@@ -67,7 +66,7 @@ const int REPEAT = 5;  //Number of times repeatDisplay() should call imageCollag
 //Function Prototypes
 vector<int> generateCollage(int size);
 void displayCollage(vector<int> imgCol);
-void displayAll(imageCollage* collageArray[], int size = H_ARRAY_SIZE);
+void displayAll(imageCollage* collageArray[]);
 void repeatDisplay(imageCollage* item, int rep = REPEAT);
 void allocateCollageArray(imageCollage* (&colArray)[H_ARRAY_SIZE]);
 void allocateTestArray(imageCollage* (&colArray)[NUM_OBJ], review* (&revArray)[NUM_OBJ]);
@@ -113,6 +112,8 @@ int main()
 	return NO_ERRORS;
 }
 
+//Description - Returns a string name of the specified object.
+//              Used as a helper method to reviewCollageTestSuite
 string getObjType(int i)
 {
 	const string SIMAGE = "imageCollage";
@@ -140,6 +141,11 @@ string getObjType(int i)
 
 }
 
+//Description - Used in main to call the appropriate number of
+//				deletes to free up memory
+//preconditions: Must be used with arrays of pointers, pointing to
+//               dynamically allocated objects
+//postconditions: Dynamically allocated memory freed
 void releaseMemory(imageCollage* (&colArray)[H_ARRAY_SIZE], imageCollage* (&collageHeteroArray)[NUM_OBJ])
 {
 	for (int index = 0; index < H_ARRAY_SIZE; index++)
@@ -154,6 +160,10 @@ void releaseMemory(imageCollage* (&colArray)[H_ARRAY_SIZE], imageCollage* (&coll
 	
 }
 
+//Description - Used as a helper method to the two allocate array methods.
+//				Returns a randomly generated collage of "int size".
+//preconditions: Must be called with a positive int
+//postconditions: Returns collage
 vector<int> generateCollage(int size)
 {
 	const int COL_MIN = 10000; //May be changed to accommodate an image database with a different 
@@ -171,6 +181,8 @@ vector<int> generateCollage(int size)
 	return collage;
 }
 
+//Description - Used as a helper method to display a collage
+//preconditions: Must be passed a valid vector
 	void displayCollage(vector<int> imgCol)
 	{
 		if (imgCol.size() == 0)
@@ -193,7 +205,11 @@ vector<int> generateCollage(int size)
 		}
 	}
 
-	void displayAll(imageCollage* collageArray[], int size)
+	//Description - Used as a helper method to display all collages in
+	//              the passed array.
+	//preconditions: Must be used with a valid array of pointers of size 
+	//               H_ARRAY_SIZE
+	void displayAll(imageCollage* collageArray[])
 	{
 		for (int index = 0; index < H_ARRAY_SIZE; index++)
 		{
@@ -206,6 +222,9 @@ vector<int> generateCollage(int size)
 		}
 	}
 
+	//Description - Helper method to repeat the display to demonstrate
+	//              cyclic and bit collage functionality
+	//preconditions: Must be used with a valid pointer
 	void repeatDisplay(imageCollage* item, int rep)
 	{
 		for (int count = 0; count < rep; ++count)
@@ -215,6 +234,11 @@ vector<int> generateCollage(int size)
 		}
 	}
 
+	//Description - Used to generate a randomly distributed array of
+	//              the six classes.
+	//preconditions: Must be used with arrays of pointers of size
+	//               H_ARRAY_SIZE
+	//postconditions: array may now be used
 	void allocateCollageArray(imageCollage* (&colArray)[H_ARRAY_SIZE])
 	{
 		const int MIN_IMG = 5; // Size range for the number of images
@@ -243,6 +267,10 @@ vector<int> generateCollage(int size)
 		}
 	}
 
+	//Description - Used to generate a known array of the six classes
+	//preconditions: Must be used with arrays of pointers of size
+	//               NUM_OBJ
+	//postconditions: array may now be used
 	void allocateTestArray(imageCollage* (&colArray)[NUM_OBJ], review* (&revArray)[NUM_OBJ])
 	{
 		const int SCORE_MIN = 1;
@@ -295,6 +323,10 @@ vector<int> generateCollage(int size)
 		}
 	}
 
+	//Description - Used in main to test the known array of class objects
+	//preconditions: Must be used with arrays of pointers, pointing to
+	//               dynamically allocated objects one of type imageCollage
+	//                the other of type review. Both must be size NUM_OBJ
 	void reviewCollageTestSuite(imageCollage* (&collageHeteroArray)[NUM_OBJ], review* (&reviewHeteroArray)[NUM_OBJ])
 	{
 		const int COLLAGE_PORTION = 2;

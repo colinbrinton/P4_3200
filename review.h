@@ -14,7 +14,6 @@
 * replaceImage() will not be used on even image ID's.
 */
 #pragma once
-#include "stdafx.h"
 #include <cmath>
 #include <vector>
 #include <cstdlib>

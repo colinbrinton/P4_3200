@@ -31,7 +31,6 @@
 */
 
 #pragma once
-#include "stdafx.h"
 #include <vector>
 #include <cstdlib>
 #include <ctime>

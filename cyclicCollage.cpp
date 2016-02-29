@@ -14,7 +14,6 @@
 * User will only want to set shift value once at construction. replaceImage() will
 * not be used.
 */
-#include "stdafx.h"
 #include "cyclicCollage.h"
 
 

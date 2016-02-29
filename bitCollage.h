@@ -13,6 +13,7 @@
 /* ASSUMPTIONS:
 * replaceImage() will not be used on even image ID's.
 */
+
 #pragma once
 #include "imageCollage.h"
 class bitCollage : public imageCollage

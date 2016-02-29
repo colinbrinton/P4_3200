@@ -13,7 +13,6 @@
 /* ASSUMPTIONS:
 * replaceImage() will not be used on even image ID's.
 */
-#include "stdafx.h"
 #include "review.h"
 
 
